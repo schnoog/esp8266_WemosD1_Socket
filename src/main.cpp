@@ -11,35 +11,27 @@ CMMC_OTA ota;
 #include "FS.h"
 #include "wman.h"
 
-#include "CMMCEasy.h"
-CMMCEasy easy;
-CMMC_Interval &interval = easy.interval;
 
-#define FANPIN 7
 
-int FanStatus;
+#include "webserver.h"
+#include "interval.h"
+
+
 
 void setup() {
     // put your setup code here, to run once:
     Serial.begin(115200);
     wifisetup();
     pinMode(13, OUTPUT);
+    webserver_setup();
     FanStatus = 1;
 }
 
 void loop() {
     // put your main code here, to run repeatedly:
     ota.loop();
-  interval.every_ms(301, [&]() {
-      if (FanStatus == 1){
-        FanStatus = 0;
-      }else{
-        FanStatus = 1;
-      }
+    webserver_loop();
+    interval_loop();
 
-
-    Serial.printf("M = %lu\n", millis());
-    Serial.println(FanStatus);
-  });
 
 }

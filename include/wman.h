@@ -7,7 +7,6 @@ void wifisetup(){
     wifiManager.autoConnect("AutoConnectAP");
     Serial.println (WiFi.localIP());
     Serial.println("connected...yeey :)");
-
 }
 
 void otasetup(){
