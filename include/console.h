@@ -13,7 +13,7 @@ int command_help(int argc, char** argv){
     Serial.println("time -- Get the current time");
     Serial.println("get -- get saved interval");
     Serial.println("sync -- sync time");
-//    Serial.println("");
+    Serial.println("wifi -- start Wifi Config Portal");
 //    Serial.println("");
 //    Serial.println("");
     Serial.println("test -- prebuilt test function");
@@ -30,6 +30,7 @@ void console_setup(){
   shell_register(command_setinterval,PSTR("set"));
   shell_register(command_time, PSTR("time"));
   shell_register(command_count,PSTR("count"));
+  shell_register(command_wificonfig,PSTR("wifi"));
 }
 
 void console_loop(){

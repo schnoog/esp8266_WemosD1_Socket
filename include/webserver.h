@@ -11,8 +11,37 @@ void webserver_setup(){
     if (!server.authenticate(www_username, www_password)) {
       return server.requestAuthentication();
     }
-    server.send(200, "text/plain", "Login OK");
+    server.send(200, "text/html", strPageHeader + basicForm(FanInt) + strPageFooter);
   });
+
+  server.on("/set", []() {
+    if (!server.authenticate(www_username, www_password)) {
+      return server.requestAuthentication();
+    }
+  String message = "Anfrage\n\n";
+  message += "URI: ";
+  message += server.uri();
+  message += "\nMethod: ";
+  message += (server.method() == HTTP_GET) ? "GET" : "POST";
+  message += "\nArguments: ";
+  message += server.args();
+  message += "\n";
+  String strSet;
+  for (uint8_t i = 0; i < server.args(); i++) {
+    message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
+    if(server.argName(i) == "interval"){
+        strSet = server.arg(i) + "000";
+Serial.println("Set by web to " + strSet);
+        write_interval(strSet);
+        String dummy = read_interval();
+    }
+  }
+
+
+  Serial.println(message);
+    server.send(200, "text/html", strPageHeader + basicForm(FanInt) + strPageFooter);
+  });
+
   server.begin();
 
   Serial.print("Open http://");

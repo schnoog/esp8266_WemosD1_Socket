@@ -17,10 +17,10 @@ void setup() {
     Serial.begin(115200);
     wifisetup();  
     webserver_setup();
-    interval_setup();
     filework_setup();
     console_setup();
     time_setup();
+    interval_setup();    
 }
 
 void loop() {

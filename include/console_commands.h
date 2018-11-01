@@ -25,8 +25,6 @@ int command_setinterval(int argc, char** argv){
     int i;
     for(i=0; i<argc; i++)
     {
-    // Print formatted text to terminal
-    shell_printf("%d - \"%s\" [len:%d]\r\n", i, argv[i], strlen(argv[i]) );
     if (i == 1){
         write_interval(argv[i]);
     }
@@ -84,6 +82,15 @@ int command_count(int argc, char** argv){
     ltoa(tmp, buf, 10);
     Serial.print("Switched ");
     Serial.print(SwitchCount);
-    Serial.println(" times");
+    Serial.println(" times with (current rate: " + FanInt + " ms)");
+    return SHELL_RET_SUCCESS;
+}
+
+int command_wificonfig(int argc, char** argv){
+    WiFiManager wifiManager;
+    if (!wifiManager.startConfigPortal("OnDemandAP")) {
+      Serial.println("failed to connect and hit timeout");
+      delay(3000);
+    }
     return SHELL_RET_SUCCESS;
 }
