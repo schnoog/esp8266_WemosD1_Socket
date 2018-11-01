@@ -1,3 +1,14 @@
+
+#include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
+#include <DNSServer.h>
+#include <ESP8266WebServer.h>
+#include <WiFiManager.h>         //https://github.com/tzapu/WiFiManager
+#include <CMMC_OTA.h>
+CMMC_OTA ota;
+
+
+
+
 void wifisetup(){
     //WiFiManager
     //Local intialization. Once its business is done, there is no need to keep it around

@@ -2,30 +2,44 @@
 CMMCEasy easy;
 CMMC_Interval &interval = easy.interval;
 
-#define FANPIN 7
 
-int FanStatus;
 
+
+
+
+
+void interval_setup(){
+    pinMode(FANPIN, OUTPUT);
+    FanStatus = 1;
+}
 
 void interval_loop(){
-// 
-interval.every_ms(600000, [&]() {
+  int intv = FanInt.toInt();
+  if (intv < 1000){
+    intv = 10000;
+  }
+
+    interval.every_ms(intv, [&]() {
       if (FanStatus == 1){
         FanStatus = 0;
       }else{
         FanStatus = 1;
       }
-    Serial.printf("M = %lu\n", millis());
-    Serial.println(FanStatus);
-  });
+      SwitchCount = SwitchCount + 1;
+    });
 //
-interval.every_ms(10000, [&]() {
-    Serial.println("Alive");
-  });
+    interval.every_ms(10001, [&]() {
+      Serial.println("Alive");
+    });
+//
+    interval.every_ms(5002, [&]() {
+      Serial.println(read_interval());
+    });
 
-
-
-
-
+    interval.every_ms(8003, [&]() {
+      Serial.print("Current looptime: " );
+      Serial.print(intv);
+      Serial.println(" ms");
+    });
 
 }

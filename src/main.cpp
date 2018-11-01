@@ -1,30 +1,26 @@
 #include "Arduino.h"
-#include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
 
-//needed for library
-#include <DNSServer.h>
-#include <ESP8266WebServer.h>
+#include "globals.h"
 
-#include <WiFiManager.h>         //https://github.com/tzapu/WiFiManager
-#include <CMMC_OTA.h>
-CMMC_OTA ota;
-#include "FS.h"
+#include "filework.h"
 #include "wman.h"
-
-
-
+#include "webtime.h"
 #include "webserver.h"
+
+#include "console.h"
+
+
 #include "interval.h"
-
-
 
 void setup() {
     // put your setup code here, to run once:
     Serial.begin(115200);
-    wifisetup();
-    pinMode(13, OUTPUT);
+    wifisetup();  
     webserver_setup();
-    FanStatus = 1;
+    interval_setup();
+    filework_setup();
+    console_setup();
+    time_setup();
 }
 
 void loop() {
@@ -32,6 +28,6 @@ void loop() {
     ota.loop();
     webserver_loop();
     interval_loop();
-
-
+    console_loop();
+    time_loop();
 }
